@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'TransactionListCell.dart';
 import '../../presenter/TransactionListRowViewModel.dart';
+import 'package:flutter_clean_report_demo/colors.dart';
+
 
 class TransactionListHeaderCell extends TransactionListCell {
 
@@ -14,7 +16,7 @@ class TransactionListHeaderCell extends TransactionListCell {
   Widget build(BuildContext context) {
         return Container(
             height: row.height,
-            color: Color(0xFF2A71DC),
+            color: brandColor,
             padding: new EdgeInsets.only(left: 20.0),
             alignment: Alignment(-1, 0),
             child: Text(row.title,

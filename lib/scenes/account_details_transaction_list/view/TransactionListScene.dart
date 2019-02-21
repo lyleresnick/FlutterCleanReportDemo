@@ -3,6 +3,7 @@ import '../presenter/TransactionListPresenter.dart';
 import '../presenter/TransactionListPresenterOutput.dart';
 import '../connector/TransactionListAssembler.dart';
 import 'cells/TransactionListCell.dart';
+import 'package:flutter_clean_report_demo/colors.dart';
 
 
 class TransactionListScene extends StatefulWidget {
@@ -38,6 +39,7 @@ class TransactionListSceneState extends State<TransactionListScene>
     return Scaffold(
       appBar: AppBar(
         title: Text('Transaction List'),
+        backgroundColor: brandColor,
       ),
       body: ListView.builder(
           itemCount: presenter.rowCount,

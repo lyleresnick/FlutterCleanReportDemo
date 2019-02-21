@@ -16,7 +16,7 @@ class TransactionListSubheaderCell extends TransactionListCell {
                 height: row.height,
                 color: backgroundColour(row.odd),
                 padding: new EdgeInsets.only(left: 20.0),
-                alignment: Alignment(-1, .8),
+                alignment: Alignment(-1, .5),
                 child: Text(row.title,
                         style: TextStyle(
                             color: Colors.black,

@@ -10,8 +10,20 @@ class TransactionListMessageCell extends TransactionListCell {
             : assert(row is TransactionListMessageViewModel, "Expected: message"),
                 row = row as TransactionListMessageViewModel;
 
+
     @override
     Widget build(BuildContext context) {
-        return Text("message ${row.message} ");
+        return Container(
+                height: row.height,
+                color: Colors.white,
+                padding: new EdgeInsets.only(left: 20.0),
+                alignment: Alignment(-1, 0),
+                child: Text(row.message,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 13,
+                        )
+                )
+        );
     }
 }
