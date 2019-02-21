@@ -10,11 +10,9 @@ class TransactionListScene extends StatefulWidget {
 
   TransactionListScene({this.presenter});
 
-  TransactionListSceneState state;
-
   @override
   State<StatefulWidget> createState() {
-    state  =  TransactionListSceneState();
+    final state = TransactionListSceneState();
     presenter.output = state;
     return state;
   }
@@ -22,7 +20,6 @@ class TransactionListScene extends StatefulWidget {
   factory TransactionListScene.assembly() {
     return TransactionListAssembler.makeScene().scene;
   }
-
 }
 
 class TransactionListSceneState extends State<TransactionListScene>

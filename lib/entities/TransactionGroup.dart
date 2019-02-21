@@ -13,7 +13,7 @@ String transactionGroupToString(TransactionGroup transactionGroup) {
         return "Authorized";
     case TransactionGroup.posted:
         return "Posted";
+    default:
+        throw "Bad Group";
     }
 }
-
-get groupList => TransactionGroup.values;

@@ -11,9 +11,9 @@ class TransactionListViewReadyTwoSourceUseCaseTransformer {
 
     transform({TransactionListViewReadyUseCaseOutput output}) {
 
+        var grandTotal = 0.0;
         output.presentInit();
 
-        var grandTotal = 0.0;
         grandTotal += transformGroup(transactions: transactionManager.fetchAuthorizedTransactions(), group: TransactionGroup.authorized, output: output);
         grandTotal += transformGroup(transactions: transactionManager.fetchPostedTransactions(), group: TransactionGroup.posted, output: output);
         output.presentGrandFooter(grandTotal: grandTotal);
