@@ -10,8 +10,27 @@ class TransactionListDetailCell extends TransactionListCell {
             : assert(row is TransactionListDetailViewModel, "Expected: detail"),
                 row = row as TransactionListDetailViewModel;
 
+
     @override
     Widget build(BuildContext context) {
-        return Text("detail ${row.description}, ${row.odd}, ${row.amount}");
+        return Container(
+                height: row.height,
+                color: backgroundColour(row.odd),
+                padding: new EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(row.description, style: makeTextStyleDetail()),
+                      Text(row.amount, style: makeTextStyleDetail()),
+                  ],
+                )
+        );
+    }
+
+    TextStyle makeTextStyleDetail() {
+        return TextStyle(
+            color: Colors.black,
+            fontSize: 13,
+        );
     }
 }

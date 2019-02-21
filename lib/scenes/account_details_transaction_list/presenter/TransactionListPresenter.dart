@@ -28,7 +28,7 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
     }
 
     CellId cellId(int index) => rows[ index ].cellId;
-    int cellHeight(int index) => rows[ index ].height;
+    double cellHeight(int index) => rows[ index ].height;
     int get rowCount => rows.length;
     TransactionListRowViewModel row(int index) => rows[index];
 

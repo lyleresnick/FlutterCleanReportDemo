@@ -12,6 +12,17 @@ class TransactionListHeaderCell extends TransactionListCell {
 
   @override
   Widget build(BuildContext context) {
-        return Text("header ${row.title}");
+        return Container(
+            height: row.height,
+            color: Color(0xFF2A71DC),
+            padding: new EdgeInsets.only(left: 20.0),
+            alignment: Alignment(-1, 0),
+            child: Text(row.title,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                )
+            )
+        );
     }
 }

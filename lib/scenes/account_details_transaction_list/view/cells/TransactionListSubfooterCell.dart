@@ -12,6 +12,9 @@ class TransactionListSubfooterCell extends TransactionListCell {
 
     @override
     Widget build(BuildContext context) {
-        return Text("subfooter ${row.odd}");
+        return Container(
+            height: 12,
+            color: backgroundColour(row.odd),
+        );
     }
 }

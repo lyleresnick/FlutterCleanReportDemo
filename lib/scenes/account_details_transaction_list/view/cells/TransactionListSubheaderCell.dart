@@ -12,6 +12,17 @@ class TransactionListSubheaderCell extends TransactionListCell {
 
     @override
     Widget build(BuildContext context) {
-        return Text("subheader ${row.title}, ${row.odd}");
+        return Container(
+                height: row.height,
+                color: backgroundColour(row.odd),
+                padding: new EdgeInsets.only(left: 20.0),
+                alignment: Alignment(-1, .8),
+                child: Text(row.title,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 11,
+                        )
+                )
+        );
     }
 }

@@ -13,8 +13,6 @@ import '../../view/cells/TransactionListMessageCell.dart';
 
 abstract class TransactionListCell extends StatelessWidget {
 
-    Color _backgroundColor;
-
     TransactionListCell({@required TransactionListRowViewModel row});
 
     factory TransactionListCell.from({CellId cellId, TransactionListRowViewModel row}) {
@@ -38,10 +36,10 @@ abstract class TransactionListCell extends StatelessWidget {
         }
     }
 
-    void _setBackgroundColour(bool odd) {
+    Color backgroundColour(bool odd) {
 
-        final backgroundRgb = odd ? 0xF7F8FC : 0xDDDDDD;
-        _backgroundColor = Color(backgroundRgb);
+        final backgroundRgb = odd ? 0xFFF7F8FC : 0xFFDDDDDD;
+        return Color(backgroundRgb);
     }
 }
 

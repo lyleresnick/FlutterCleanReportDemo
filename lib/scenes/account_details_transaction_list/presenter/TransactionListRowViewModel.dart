@@ -12,7 +12,7 @@ enum CellId {
 
 abstract class TransactionListRowViewModel {
     CellId get cellId;
-    int get height;
+    double get height;
 }
 
 class TransactionListHeaderViewModel extends TransactionListRowViewModel {
