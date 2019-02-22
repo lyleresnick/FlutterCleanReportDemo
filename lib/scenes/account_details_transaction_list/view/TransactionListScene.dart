@@ -42,6 +42,7 @@ class TransactionListSceneState extends State<TransactionListScene>
       appBar: AppBar(
         title: Text('Transaction List'),
         backgroundColor: brandColor,
+        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       body: ListView.builder(
           itemCount: presenter.rowCount,
