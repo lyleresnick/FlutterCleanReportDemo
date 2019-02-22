@@ -1,7 +1,8 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
-import 'TransactionGroup.dart';
-import 'package:intl/intl.dart';
 
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+import 'TransactionGroup.dart';
 
 class TransactionEntity {
 
@@ -12,9 +13,9 @@ class TransactionEntity {
 
     static final _inboundDateFormatter = DateFormat("yyyy'-'MM'-'dd");
 
-    TransactionEntity({this.group, this.date, this.description, this.amount});
+    TransactionEntity({@required this.group, @required this.date, @required this.description, @required this.amount});
 
-    factory TransactionEntity.fromStrings({String group, String date, String description, String amount, String debit}) {
+    factory TransactionEntity.fromStrings({@required String group, @required String date, @required String description, @required String amount, @required String debit}) {
         TransactionGroup saveGroup;
         DateTime saveDate;
         double saveAmount;

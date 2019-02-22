@@ -1,3 +1,5 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
+import 'package:flutter/foundation.dart';
 import '../../../entities/TransactionEntity.dart';
 import '../../../entities/TransactionGroup.dart';
 import '../../../managers/TwoSourceManager.dart';
@@ -5,17 +7,17 @@ import '../use_case/TransactionListViewReadyUseCaseOutput.dart';
 
 class TransactionListViewReadyTwoSourceUseCaseTransformer {
 
-    final TwoSourceManager transactionManager;
+    final TwoSourceManager _transactionManager;
 
-    TransactionListViewReadyTwoSourceUseCaseTransformer({this.transactionManager});
+    TransactionListViewReadyTwoSourceUseCaseTransformer({@required TwoSourceManager transactionManager}) : _transactionManager = transactionManager;
 
     transform({TransactionListViewReadyUseCaseOutput output}) {
 
         var grandTotal = 0.0;
         output.presentInit();
 
-        grandTotal += transformGroup(transactions: transactionManager.fetchAuthorizedTransactions(), group: TransactionGroup.authorized, output: output);
-        grandTotal += transformGroup(transactions: transactionManager.fetchPostedTransactions(), group: TransactionGroup.posted, output: output);
+        grandTotal += transformGroup(transactions: _transactionManager.fetchAuthorizedTransactions(), group: TransactionGroup.authorized, output: output);
+        grandTotal += transformGroup(transactions: _transactionManager.fetchPostedTransactions(), group: TransactionGroup.posted, output: output);
         output.presentGrandFooter(grandTotal: grandTotal);
 
         output.presentReport();

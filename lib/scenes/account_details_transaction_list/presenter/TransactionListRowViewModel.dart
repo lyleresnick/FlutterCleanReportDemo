@@ -1,3 +1,4 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
 
 enum CellId {
      header,
@@ -8,7 +9,6 @@ enum CellId {
      grandfooter,
      message
 }
-
 
 abstract class TransactionListRowViewModel {
     CellId get cellId;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'TransactionListCell.dart';
 import '../../presenter/TransactionListRowViewModel.dart';
-import 'package:flutter_clean_report_demo/colors.dart';
+import 'package:flutter_clean_report_demo/scenes/common/colors.dart';
 
 
 class TransactionListHeaderCell extends TransactionListCell {

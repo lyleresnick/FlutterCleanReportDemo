@@ -1,21 +1,22 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
+import 'package:flutter/foundation.dart';
 import '../../../entities/TransactionEntity.dart';
 import '../../../entities/TransactionGroup.dart';
 import '../../../managers/OneSourceManager.dart';
 import '../use_case/TransactionListViewReadyUseCaseOutput.dart';
 
-
 class TransactionListViewReadyOneSourceUseCaseTransformer {
 
-    final OneSourceManager transactionManager;
+    final OneSourceManager _transactionManager;
 
-    TransactionListViewReadyOneSourceUseCaseTransformer({this.transactionManager});
+    TransactionListViewReadyOneSourceUseCaseTransformer({@required OneSourceManager transactionManager}) : _transactionManager = transactionManager;
 
     transform({TransactionListViewReadyUseCaseOutput output}) {
 
         var grandTotal = 0.0;
         output.presentInit();
 
-        final allTransactions = transactionManager.fetchAllTransactions();
+        final allTransactions = _transactionManager.fetchAllTransactions();
         if(allTransactions != null) {
 
             var groupStream = [TransactionGroup.authorized, TransactionGroup.posted].iterator;

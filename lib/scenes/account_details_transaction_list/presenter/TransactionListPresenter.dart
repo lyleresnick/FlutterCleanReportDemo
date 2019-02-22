@@ -1,12 +1,13 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
-import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
-import 'TransactionListPresenterOutput.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
+
+import '../../../entities/TransactionGroup.dart';
 import '../use_case/TransactionListUseCase.dart';
 import '../use_case/TransactionListUseCaseOutput.dart';
 
+import 'TransactionListPresenterOutput.dart';
 import 'TransactionListRowViewModel.dart';
-import 'package:intl/intl.dart';
-
 
 class TransactionListPresenter implements TransactionListUseCaseOutput {
 
@@ -14,31 +15,28 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
 
     final _outboundDateFormatter = DateFormat.yMMMMd("en_US");
 
-    var rows = List<TransactionListRowViewModel>();
-    var odd = false;
+    var _rows = List<TransactionListRowViewModel>();
+    var _odd = false;
 
     final TransactionListUseCase useCase;
 
-    TransactionListPresenter({this.useCase});
-
-
+    TransactionListPresenter({@required this.useCase});
 
     eventViewReady() {
         useCase.eventViewReady();
     }
 
-    CellId cellId(int index) => rows[ index ].cellId;
-    double cellHeight(int index) => rows[ index ].height;
-    int get rowCount => rows.length;
-    TransactionListRowViewModel row(int index) => rows[index];
+    CellId cellId(int index) => _rows[ index ].cellId;
+    double cellHeight(int index) => _rows[ index ].height;
+    int get rowCount => _rows.length;
+    TransactionListRowViewModel row(int index) => _rows[index];
 
 // TransactionListUseCaseOutput
 // TransactionListViewReadyUseCaseOutput
 
-
     @override void presentInit() {
-        odd = false;
-        rows.clear();
+        _odd = false;
+        _rows.clear();
     }
 
     @override void presentReport() {
@@ -46,13 +44,13 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
     }
 
     @override void presentHeader({TransactionGroup group}) {
-        rows.add(TransactionListHeaderViewModel(title: transactionGroupToString(group) + " Transactions"));
+        _rows.add(TransactionListHeaderViewModel(title: transactionGroupToString(group) + " Transactions"));
     }
 
     @override void presentSubheader({DateTime date}) {
     
-        odd = !odd;
-        rows.add(TransactionListSubheaderViewModel(title: _formatDate(date), odd: odd));
+        _odd = !_odd;
+        _rows.add(TransactionListSubheaderViewModel(title: _formatDate(date), odd: _odd));
     }
 
     String _formatDate(DateTime date) {
@@ -61,37 +59,37 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
 
     @override void presentDetail({String description, double amount}) {
 
-        rows.add(TransactionListDetailViewModel(description: description, amount: amount.toString(), odd: odd));
+        _rows.add(TransactionListDetailViewModel(description: description, amount: amount.toStringAsFixed(2), odd: _odd));
     }
 
     @override void presentSubfooter() {
-        rows.add(TransactionListSubfooterViewModel(odd: odd));
+        _rows.add(TransactionListSubfooterViewModel(odd: _odd));
     }
 
     @override void presentFooter({double total}) {
 
-        odd = !odd;
-        rows.add(TransactionListFooterViewModel(total: total.toString(), odd: odd));
+        _odd = !_odd;
+        _rows.add(TransactionListFooterViewModel(total: total.toStringAsFixed(2), odd: _odd));
     }
 
     @override void presentGrandFooter({double grandTotal}) {
 
-        rows.add(TransactionListGrandFooterViewModel(grandTotal: grandTotal.toString()));
+        _rows.add(TransactionListGrandFooterViewModel(grandTotal: grandTotal.toStringAsFixed(2)));
     }
 
     @override void presentGroupNotFoundMessage({TransactionGroup group}) {
     
-        rows.add(TransactionListMessageViewModel(message: "${transactionGroupToString(group).toString()} Transactions are not currently available."));
+        _rows.add(TransactionListMessageViewModel(message: "${transactionGroupToString(group)} Transactions are not currently available."));
     }
 
     @override void presentNoTransactionsMessage({TransactionGroup group}) {
 
-        rows.add(TransactionListMessageViewModel(message: "There are no ${transactionGroupToString(group).toString()} Transactions in this period" ));
+        _rows.add(TransactionListMessageViewModel(message: "There are no ${transactionGroupToString(group)} Transactions in this period" ));
     }
 
     @override void presentNotFoundMessage() {
 
-        rows.add(TransactionListHeaderViewModel(title: "All"));
-        rows.add(TransactionListMessageViewModel(message: "Transactions are not currently available."));
+        _rows.add(TransactionListHeaderViewModel(title: "All"));
+        _rows.add(TransactionListMessageViewModel(message: "Transactions are not currently available."));
     }
 }

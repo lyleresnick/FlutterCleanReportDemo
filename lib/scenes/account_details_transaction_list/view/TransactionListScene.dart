@@ -1,15 +1,16 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
 import 'package:flutter/material.dart';
+import '../../common/colors.dart';
 import '../presenter/TransactionListPresenter.dart';
 import '../presenter/TransactionListPresenterOutput.dart';
 import '../connector/TransactionListAssembler.dart';
 import 'cells/TransactionListCell.dart';
-import 'package:flutter_clean_report_demo/colors.dart';
 
 
 class TransactionListScene extends StatefulWidget {
   final TransactionListPresenter presenter;
 
-  TransactionListScene({this.presenter});
+  TransactionListScene({@required this.presenter});
 
   @override
   State<StatefulWidget> createState() {
@@ -48,7 +49,6 @@ class TransactionListSceneState extends State<TransactionListScene>
           }),
     );
   }
-
 
 // TransactionListPresenterOutput
 // TransactionListViewReadyPresenterOutput

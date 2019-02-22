@@ -1,3 +1,4 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
 import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
 
 abstract class TransactionListViewReadyUseCaseOutput {

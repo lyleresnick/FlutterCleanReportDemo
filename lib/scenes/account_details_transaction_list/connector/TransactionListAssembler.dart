@@ -1,8 +1,9 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
+import '../../../entity_gateway/EntityGateway.dart';
+import '../../../entity_gateway/EntityGatewayImpl.dart';
 import '../view/TransactionListScene.dart';
 import '../presenter/TransactionListPresenter.dart';
 import '../use_case/TransactionListUseCase.dart';
-import 'package:flutter_clean_report_demo/entity_gateway/EntityGateway.dart';
-import 'package:flutter_clean_report_demo/entity_gateway/EntityGatewayImpl.dart';
 
 class TransactionListAssembler {
 
@@ -21,7 +22,6 @@ class TransactionListAssembler {
         final presenter = TransactionListPresenter(useCase: useCase);
         final scene = TransactionListScene(presenter: presenter);
         useCase.output = presenter;
-
 
         return TransactionListAssembler(scene: scene, useCase: useCase, presenter: presenter);
     }

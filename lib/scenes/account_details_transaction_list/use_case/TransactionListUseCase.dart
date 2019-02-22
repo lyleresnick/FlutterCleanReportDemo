@@ -1,19 +1,21 @@
-import 'package:flutter_clean_report_demo/entity_gateway/EntityGateway.dart';
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
+import 'package:flutter/foundation.dart';
+import '../../../entity_gateway/EntityGateway.dart';
 import 'TransactionListUseCaseOutput.dart';
-//import 'TransactionListViewReadyTwoSourceUseCaseTransformer.dart';
-import 'TransactionListViewReadyOneSourceUseCaseTransformer.dart';
+import 'TransactionListViewReadyTwoSourceUseCaseTransformer.dart';
+//import 'TransactionListViewReadyOneSourceUseCaseTransformer.dart';
 
 
 class TransactionListUseCase {
 
-    final EntityGateway entityGateway;
     TransactionListUseCaseOutput output;
-    TransactionListUseCase({this.entityGateway});
+    final EntityGateway _entityGateway;
+    TransactionListUseCase({@required EntityGateway entityGateway}) : _entityGateway = entityGateway;
 
   void eventViewReady() {
 
-//      final transformer = TransactionListViewReadyTwoSourceUseCaseTransformer(transactionManager: entityGateway.twoSourceManager);
-      final transformer = TransactionListViewReadyOneSourceUseCaseTransformer(transactionManager: entityGateway.oneSourceManager);
+      final transformer = TransactionListViewReadyTwoSourceUseCaseTransformer(transactionManager: _entityGateway.twoSourceManager);
+//      final transformer = TransactionListViewReadyOneSourceUseCaseTransformer(transactionManager: _entityGateway.oneSourceManager);
       transformer.transform(output: output);
 
 
