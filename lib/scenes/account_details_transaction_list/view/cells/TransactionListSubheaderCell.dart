@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'TransactionListCell.dart';
 import '../../presenter/TransactionListRowViewModel.dart';
+import 'TransactionListCell.dart';
 
 class TransactionListSubheaderCell extends TransactionListCell {
 
