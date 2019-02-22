@@ -1,4 +1,5 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
+
 import '../../../entity_gateway/EntityGateway.dart';
 import '../../../entity_gateway/EntityGatewayImpl.dart';
 import '../view/TransactionListScene.dart';

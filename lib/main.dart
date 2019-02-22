@@ -1,3 +1,5 @@
+//  Copyright © 2019 Lyle Resnick. All rights reserved.
+
 import 'package:flutter/material.dart';
 import 'scenes/account_details_transaction_list/view/TransactionListScene.dart';
 
