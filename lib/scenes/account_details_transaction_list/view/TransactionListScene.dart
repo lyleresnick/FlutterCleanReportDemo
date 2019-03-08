@@ -21,8 +21,7 @@ class TransactionListScene extends StatefulWidget {
   }
 }
 
-class TransactionListSceneState extends State<TransactionListScene>
-    implements TransactionListPresenterOutput {
+class TransactionListSceneState extends State<TransactionListScene> implements TransactionListPresenterOutput {
   TransactionListPresenter presenter;
 
   @override
