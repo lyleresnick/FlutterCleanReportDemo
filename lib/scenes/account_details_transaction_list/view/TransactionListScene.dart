@@ -14,11 +14,7 @@ class TransactionListScene extends StatefulWidget {
   TransactionListScene({@required this.presenter});
 
   @override
-  State<StatefulWidget> createState() {
-    final state = TransactionListSceneState();
-    presenter.output = state;
-    return state;
-  }
+  State<StatefulWidget> createState() => TransactionListSceneState();
 
   factory TransactionListScene.assembly() {
     return TransactionListAssembler.makeScene().scene;
@@ -33,6 +29,8 @@ class TransactionListSceneState extends State<TransactionListScene>
   void initState() {
     super.initState();
     presenter = widget.presenter;
+    presenter.output = this;
+
     presenter.eventViewReady();
   }
 
