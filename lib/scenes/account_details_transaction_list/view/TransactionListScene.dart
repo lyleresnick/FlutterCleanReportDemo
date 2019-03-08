@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../common/colors.dart';
 import '../presenter/TransactionListPresenter.dart';
 import '../presenter/TransactionListPresenterOutput.dart';
-import '../connector/TransactionListAssembler.dart';
+import '../connector/TransactionListAssembly.dart';
 import 'cells/TransactionListCell.dart';
 
 
@@ -16,8 +16,8 @@ class TransactionListScene extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => TransactionListSceneState();
 
-  factory TransactionListScene.assembly() {
-    return TransactionListAssembler.makeScene().scene;
+  factory TransactionListScene.assembled() {
+    return TransactionListAssembly.assembled().scene;
   }
 }
 
