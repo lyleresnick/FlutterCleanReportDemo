@@ -45,7 +45,7 @@ class TransactionListSceneState extends State<TransactionListScene>
       body: ListView.builder(
           itemCount: presenter.rowCount,
           itemBuilder: (context, index) {
-            return TransactionListCell.from(cellId: presenter.cellId(index),row:  presenter.row(index) );
+            return TransactionListCell.from(cellId: presenter.cellId(index),row: presenter.row(index) );
           }),
     );
   }
