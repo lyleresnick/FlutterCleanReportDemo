@@ -10,7 +10,7 @@ class TransactionListHeaderCell extends TransactionListCell {
 
     TransactionListHeaderCell({@required TransactionListRowViewModel row})
         : assert(row is TransactionListHeaderViewModel, "Expected: header"),
-          row = row as TransactionListHeaderViewModel;
+                row = row;
 
   @override
   Widget build(BuildContext context) {

@@ -1,16 +1,10 @@
-# flutter_clean_report_demo
+# FlutterCleanReportDemo
 
-A new Flutter application.
+This Flutter app demonstrates an architectual solution to a fairly complex banking report scene.
 
-## Getting Started
+It shows how VIPER can be used to break up a potentially very Massive Scene by introducing the following classes:
 
-This project is a starting point for a Flutter application.
+- a Use Case which transforms its input Model to an output protocol -- there are two transformers: one processes data originating from two separate input streams, the other processes data originating from a single stream
+- a Presenter, which transforms its input Model (as defined by the output protocol from the Use Case) into a ViewModel. The presenter retains the View Model to act as data source for the TableView 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Note that the view models used here are not the ViewModels implied by the MVVM pattern

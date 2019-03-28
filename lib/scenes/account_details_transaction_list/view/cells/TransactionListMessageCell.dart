@@ -8,7 +8,7 @@ class TransactionListMessageCell extends TransactionListCell {
 
     TransactionListMessageCell({@required TransactionListRowViewModel row})
             : assert(row is TransactionListMessageViewModel, "Expected: message"),
-                row = row as TransactionListMessageViewModel;
+                row = row;
 
 
     @override

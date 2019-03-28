@@ -8,7 +8,7 @@ class TransactionListFooterCell extends TransactionListCell {
 
     TransactionListFooterCell({@required TransactionListRowViewModel row})
             : assert(row is TransactionListFooterViewModel, "Expected: footer"),
-                row = row as TransactionListFooterViewModel;
+                row = row;
 
     @override
     Widget build(BuildContext context) {

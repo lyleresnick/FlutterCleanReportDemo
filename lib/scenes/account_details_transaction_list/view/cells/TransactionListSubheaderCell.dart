@@ -8,7 +8,7 @@ class TransactionListSubheaderCell extends TransactionListCell {
 
     TransactionListSubheaderCell({@required TransactionListRowViewModel row})
             : assert(row is TransactionListSubheaderViewModel, "Expected: subheader"),
-                row = row as TransactionListSubheaderViewModel;
+                row = row;
 
     @override
     Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ class TransactionListGrandFooterCell extends TransactionListCell {
 
     TransactionListGrandFooterCell({@required TransactionListRowViewModel row})
             : assert(row is TransactionListGrandFooterViewModel, "Expected: grandfooter"),
-                row = row as TransactionListGrandFooterViewModel;
+                row = row;
 
 
     @override

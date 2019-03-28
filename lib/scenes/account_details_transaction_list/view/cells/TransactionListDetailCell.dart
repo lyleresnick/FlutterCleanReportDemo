@@ -8,7 +8,7 @@ class TransactionListDetailCell extends TransactionListCell {
 
     TransactionListDetailCell({@required TransactionListRowViewModel row})
             : assert(row is TransactionListDetailViewModel, "Expected: detail"),
-                row = row as TransactionListDetailViewModel;
+                row = row;
 
 
     @override
