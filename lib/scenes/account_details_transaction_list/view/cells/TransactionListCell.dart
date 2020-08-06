@@ -15,8 +15,8 @@ abstract class TransactionListCell extends StatelessWidget {
 
     TransactionListCell({@required TransactionListRowViewModel row});
 
-    factory TransactionListCell.from({@required CellId cellId, @required TransactionListRowViewModel row}) {
-        switch (cellId) {
+    factory TransactionListCell.from({ @required TransactionListRowViewModel row}) {
+        switch (row.cellId) {
             case CellId.header:
                 return TransactionListHeaderCell(row: row);
             case CellId.subheader:

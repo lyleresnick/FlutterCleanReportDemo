@@ -6,6 +6,8 @@ import '../presenter/TransactionListPresenter.dart';
 import '../presenter/TransactionListPresenterOutput.dart';
 import '../connector/TransactionListAssembly.dart';
 import 'cells/TransactionListCell.dart';
+import '../presenter/TransactionListRowViewModel.dart';
+
 
 
 class TransactionListScene extends StatefulWidget {
@@ -23,6 +25,8 @@ class TransactionListScene extends StatefulWidget {
 
 class TransactionListSceneState extends State<TransactionListScene> implements TransactionListPresenterOutput {
   TransactionListPresenter presenter;
+
+  var _rows = List<TransactionListRowViewModel>();
 
   @override
   void initState() {
@@ -42,9 +46,9 @@ class TransactionListSceneState extends State<TransactionListScene> implements T
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       body: ListView.builder(
-          itemCount: presenter.rowCount,
+          itemCount: _rows.length,
           itemBuilder: (context, index) {
-            return TransactionListCell.from(cellId: presenter.cellId(index),row: presenter.row(index) );
+            return TransactionListCell.from(row: _rows[index] );
           }),
     );
   }
@@ -52,7 +56,9 @@ class TransactionListSceneState extends State<TransactionListScene> implements T
 // TransactionListPresenterOutput
 // TransactionListViewReadyPresenterOutput
 
-  showReport() {
-    setState(() {});
+  showReport(List<TransactionListRowViewModel> rows) {
+    setState(() {
+      _rows = rows;
+    });
   }
 }

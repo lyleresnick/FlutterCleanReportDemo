@@ -26,11 +26,6 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
         useCase.eventViewReady();
     }
 
-    CellId cellId(int index) => _rows[ index ].cellId;
-    double cellHeight(int index) => _rows[ index ].height;
-    int get rowCount => _rows.length;
-    TransactionListRowViewModel row(int index) => _rows[index];
-
 // TransactionListUseCaseOutput
 // TransactionListViewReadyUseCaseOutput
 
@@ -40,7 +35,7 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
     }
 
     @override void presentReport() {
-        output.showReport();
+        output.showReport(_rows);
     }
 
     @override void presentHeader({TransactionGroup group}) {
