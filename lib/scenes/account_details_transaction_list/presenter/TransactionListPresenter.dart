@@ -1,17 +1,21 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
+import 'dart:async';
+
+import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
+import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCase.dart';
+import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCaseOutput.dart';
+import 'package:flutter_clean_report_demo/scenes/common/Bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../entities/TransactionGroup.dart';
-import '../use_case/TransactionListUseCase.dart';
-import '../use_case/TransactionListUseCaseOutput.dart';
 
 import 'TransactionListPresenterOutput.dart';
 import 'TransactionListRowViewModel.dart';
 
-class TransactionListPresenter implements TransactionListUseCaseOutput {
+class TransactionListPresenter extends Bloc {
 
-    TransactionListPresenterOutput output;
+    final _controller = StreamController<TransactionListPresenterOutput>();
+    Stream<TransactionListPresenterOutput> get stream => _controller.stream;
 
     final _outboundDateFormatter = DateFormat.yMMMMd("en_US");
 
@@ -20,71 +24,62 @@ class TransactionListPresenter implements TransactionListUseCaseOutput {
 
     final TransactionListUseCase useCase;
 
-    TransactionListPresenter({@required this.useCase});
+    TransactionListPresenter({@required this.useCase}) {
+        useCase.stream
+            .listen((event) {
+                if (event is PresentInit) {
+                    _odd = false;
+                    _rows.clear();
+                }
+                else if (event is PresentHeader) {
+                    _rows.add(TransactionListHeaderViewModel(title: transactionGroupToString(event.group) + " Transactions"));
+                }
+                else if (event is PresentSubheader) {
+                    _odd = !_odd;
+                    _rows.add(TransactionListSubheaderViewModel(title: _formatDate(event.date), odd: _odd));
+                }
+                else if (event is PresentDetail) {
+                    _rows.add(TransactionListDetailViewModel(description: event.description, amount: event.amount.toStringAsFixed(2), odd: _odd));
+                }
+                else if (event is PresentSubfooter) {
+                    _rows.add(TransactionListSubfooterViewModel(odd: _odd));
+                }
+                else if (event is PresentFooter) {
+                    _odd = !_odd;
+                    _rows.add(TransactionListFooterViewModel(total: event.total.toStringAsFixed(2), odd: _odd));
+                }
+                else if (event is PresentGrandFooter) {
+                    _rows.add(TransactionListGrandFooterViewModel(grandTotal: event.grandTotal.toStringAsFixed(2)));
+                }
+                else if (event is PresentGroupNotFoundMessage) {
+                    _rows.add(TransactionListMessageViewModel(message: "${transactionGroupToString(event.group)} Transactions are not currently available."));
+                }
+                else if (event is PresentNoTransactionsMessage) {
+                    _rows.add(TransactionListMessageViewModel(message: "There are no ${transactionGroupToString(event.group)} Transactions in this period" ));
+                }
+                else if (event is PresentNotFoundMessage) {
+                    _rows.add(TransactionListHeaderViewModel(title: "All"));
+                    _rows.add(TransactionListMessageViewModel(message: "Transactions are not currently available."));
+                }
+                else if (event is PresentReport) {
+                    _controller.sink.add(ShowReport(_rows));
+                }
+            });
+
+    }
 
     eventViewReady() {
         useCase.eventViewReady();
-    }
-
-// TransactionListUseCaseOutput
-// TransactionListViewReadyUseCaseOutput
-
-    @override void presentInit() {
-        _odd = false;
-        _rows.clear();
-    }
-
-    @override void presentReport() {
-        output.showReport(_rows);
-    }
-
-    @override void presentHeader({TransactionGroup group}) {
-        _rows.add(TransactionListHeaderViewModel(title: transactionGroupToString(group) + " Transactions"));
-    }
-
-    @override void presentSubheader({DateTime date}) {
-    
-        _odd = !_odd;
-        _rows.add(TransactionListSubheaderViewModel(title: _formatDate(date), odd: _odd));
     }
 
     String _formatDate(DateTime date) {
         return _outboundDateFormatter.format(date);
     }
 
-    @override void presentDetail({String description, double amount}) {
-
-        _rows.add(TransactionListDetailViewModel(description: description, amount: amount.toStringAsFixed(2), odd: _odd));
+    @override
+    void dispose() {
+        useCase.dispose();
+        _controller.close();
     }
 
-    @override void presentSubfooter() {
-        _rows.add(TransactionListSubfooterViewModel(odd: _odd));
-    }
-
-    @override void presentFooter({double total}) {
-
-        _odd = !_odd;
-        _rows.add(TransactionListFooterViewModel(total: total.toStringAsFixed(2), odd: _odd));
-    }
-
-    @override void presentGrandFooter({double grandTotal}) {
-
-        _rows.add(TransactionListGrandFooterViewModel(grandTotal: grandTotal.toStringAsFixed(2)));
-    }
-
-    @override void presentGroupNotFoundMessage({TransactionGroup group}) {
-    
-        _rows.add(TransactionListMessageViewModel(message: "${transactionGroupToString(group)} Transactions are not currently available."));
-    }
-
-    @override void presentNoTransactionsMessage({TransactionGroup group}) {
-
-        _rows.add(TransactionListMessageViewModel(message: "There are no ${transactionGroupToString(group)} Transactions in this period" ));
-    }
-
-    @override void presentNotFoundMessage() {
-
-        _rows.add(TransactionListHeaderViewModel(title: "All"));
-        _rows.add(TransactionListMessageViewModel(message: "Transactions are not currently available."));
-    }
 }

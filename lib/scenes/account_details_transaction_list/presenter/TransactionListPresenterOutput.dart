@@ -1,4 +1,6 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
-import 'TransactionListViewReadyPresenterOutput.dart';
+import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/presenter/TransactionListRowViewModel.dart';
 
-abstract class TransactionListPresenterOutput implements TransactionListViewReadyPresenterOutput {}
+abstract class TransactionListPresenterOutput {}
+// ViewReady
+class ShowReport extends TransactionListPresenterOutput { final List<TransactionListRowViewModel> rows; ShowReport(this.rows); }

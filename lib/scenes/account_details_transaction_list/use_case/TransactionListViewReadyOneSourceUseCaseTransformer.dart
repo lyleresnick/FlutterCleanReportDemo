@@ -1,22 +1,24 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
-import '../../../entities/TransactionEntity.dart';
-import '../../../entities/TransactionGroup.dart';
-import '../../../managers/OneSourceManager.dart';
-import '../use_case/TransactionListViewReadyUseCaseOutput.dart';
+import 'package:flutter_clean_report_demo/entities/TransactionEntity.dart';
+import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
+import 'package:flutter_clean_report_demo/managers/TransactionManager.dart';
+import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCaseOutput.dart';
 
 class TransactionListViewReadyOneSourceUseCaseTransformer {
 
-    final OneSourceManager _transactionManager;
+    final TransactionManager transactionManager;
 
-    TransactionListViewReadyOneSourceUseCaseTransformer({@required OneSourceManager transactionManager}) : _transactionManager = transactionManager;
+    TransactionListViewReadyOneSourceUseCaseTransformer({@required this.transactionManager});
 
-    transform({TransactionListViewReadyUseCaseOutput output}) {
+    transform({StreamSink<TransactionListUseCaseOutput> output}) {
 
         var grandTotal = 0.0;
-        output.presentInit();
+        output.add(PresentInit());
 
-        final allTransactions = _transactionManager.fetchAllTransactions();
+        final allTransactions = transactionManager.fetchAllTransactions();
         if(allTransactions != null) {
 
             var groupStream = [TransactionGroup.authorized, TransactionGroup.posted].iterator;
@@ -28,11 +30,11 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
             var minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
             while(minGroup != null) {
 
-                output.presentHeader(group: minGroup);
+                output.add(PresentHeader(minGroup));
 
                 if((transaction == null) || (minGroup != transaction.group)) {
 
-                    output.presentNoTransactionsMessage(group: minGroup);
+                    output.add(PresentNoTransactionsMessage(minGroup));
                     currentGroup = next(groupStream);
                     minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
                 }
@@ -42,7 +44,7 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
                     while((transaction != null) && (transaction.group == minGroup)) {
 
                         final currentDate = transaction.date;
-                        output.presentSubheader(date: currentDate);
+                        output.add(PresentSubheader(currentDate));
 
                         while((transaction != null)
                             && (transaction.group == minGroup)
@@ -51,23 +53,23 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
                             final amount = transaction.amount;
                             total += amount;
                             grandTotal += amount;
-                            output.presentDetail(description: transaction.description, amount: amount);
+                            output.add(PresentDetail(transaction.description, amount));
 
                             transaction = next(transactionStream);
                         }
-                        output.presentSubfooter();
+                        output.add(PresentSubfooter());
                     }
-                    output.presentFooter(total: total);
+                    output.add(PresentFooter(total));
                     currentGroup = next(groupStream);
                     minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
                 }
             }
         }
         else {
-            output.presentNotFoundMessage();
+            output.add(PresentNotFoundMessage());
         }
-        output.presentGrandFooter(grandTotal: grandTotal);
-        output.presentReport();
+        output.add(PresentGrandFooter(grandTotal));
+        output.add(PresentReport());
     }
 
     T next<T>(Iterator<T> transactionStream) {
