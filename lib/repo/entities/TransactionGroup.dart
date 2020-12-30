@@ -5,13 +5,17 @@ enum TransactionGroup {
     posted
 }
 
-String transactionGroupToString(TransactionGroup transactionGroup) {
-    switch ( transactionGroup ) {
-    case TransactionGroup.authorized:
-        return "Authorized";
-    case TransactionGroup.posted:
-        return "Posted";
-    default:
-        throw "Bad Group";
+
+extension TransactionGroupRawValue on TransactionGroup {
+
+    String get rawValue {
+        switch (this) {
+            case TransactionGroup.authorized:
+                return "Authorized";
+            case TransactionGroup.posted:
+                return "Posted";
+            default:
+                throw "Bad Group";
+        }
     }
 }

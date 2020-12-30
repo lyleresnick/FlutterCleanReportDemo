@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_clean_report_demo/repo/factory/EntityGateway.dart';
 import 'package:flutter_clean_report_demo/scenes/common/Bloc.dart';
 import 'TransactionListUseCaseOutput.dart';
-import 'TransactionListViewReadyTwoSourceUseCaseTransformer.dart';
-//import 'TransactionListViewReadyOneSourceUseCaseTransformer.dart';
+// import 'TransactionListViewReadyTwoSourceUseCaseTransformer.dart';
+import 'TransactionListViewReadyOneSourceUseCaseTransformer.dart';
 
 
 class TransactionListUseCase extends Bloc {
@@ -19,8 +19,8 @@ class TransactionListUseCase extends Bloc {
 
   void eventViewReady() {
 
-      final transformer = TransactionListViewReadyTwoSourceUseCaseTransformer(transactionManager: entityGateway.transactionManager);
-//      final transformer = TransactionListViewReadyOneSourceUseCaseTransformer(transactionManager: entityGateway.transactionManager);
+      // final transformer = TransactionListViewReadyTwoSourceUseCaseTransformer(transactionManager: entityGateway.transactionManager);
+     final transformer = TransactionListViewReadyOneSourceUseCaseTransformer(transactionManager: entityGateway.transactionManager);
       transformer.transform(output:  _controller.sink);
 
   }

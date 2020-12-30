@@ -1,4 +1,5 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -82,7 +83,7 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
             return null;
     }
 
-    TransactionGroup determineMinGroup({group: TransactionGroup, transaction: TransactionEntity}) {
+    TransactionGroup determineMinGroup({TransactionGroup group, TransactionEntity transaction}) {
 
         if((group == null) && (transaction == null)) {
             return null;
@@ -94,7 +95,7 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
             return group;
         }
         else {
-             return (transactionGroupToString(group).compareTo(transactionGroupToString(transaction.group)) < 0) ? group : transaction.group;
+             return group.rawValue.compareTo(transaction.group.rawValue) < 0 ? group : transaction.group;
         }
     }
 }

@@ -32,7 +32,7 @@ class TransactionListPresenter extends Bloc {
                     _rows.clear();
                 }
                 else if (event is PresentHeader) {
-                    _rows.add(TransactionListHeaderViewModel(title: transactionGroupToString(event.group) + " Transactions"));
+                    _rows.add(TransactionListHeaderViewModel(title: event.group.rawValue + " Transactions"));
                 }
                 else if (event is PresentSubheader) {
                     _odd = !_odd;
@@ -52,10 +52,10 @@ class TransactionListPresenter extends Bloc {
                     _rows.add(TransactionListGrandFooterViewModel(grandTotal: event.grandTotal.toStringAsFixed(2)));
                 }
                 else if (event is PresentGroupNotFoundMessage) {
-                    _rows.add(TransactionListMessageViewModel(message: "${transactionGroupToString(event.group)} Transactions are not currently available."));
+                    _rows.add(TransactionListMessageViewModel(message: "${event.group.rawValue} Transactions are not currently available."));
                 }
                 else if (event is PresentNoTransactionsMessage) {
-                    _rows.add(TransactionListMessageViewModel(message: "There are no ${transactionGroupToString(event.group)} Transactions in this period" ));
+                    _rows.add(TransactionListMessageViewModel(message: "There are no ${event.group.rawValue} Transactions in this period" ));
                 }
                 else if (event is PresentFailure) {
                     _rows.add(TransactionListMessageViewModel(message: "Error: ${event.code}, Message: ${event.description}" ));
