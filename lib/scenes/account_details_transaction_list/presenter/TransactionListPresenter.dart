@@ -1,7 +1,7 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
 import 'dart:async';
 
-import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
+import 'package:flutter_clean_report_demo/repo/entities/TransactionGroup.dart';
 import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCase.dart';
 import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCaseOutput.dart';
 import 'package:flutter_clean_report_demo/scenes/common/Bloc.dart';
@@ -56,6 +56,9 @@ class TransactionListPresenter extends Bloc {
                 }
                 else if (event is PresentNoTransactionsMessage) {
                     _rows.add(TransactionListMessageViewModel(message: "There are no ${transactionGroupToString(event.group)} Transactions in this period" ));
+                }
+                else if (event is PresentFailure) {
+                    _rows.add(TransactionListMessageViewModel(message: "Error: ${event.code}, Message: ${event.description}" ));
                 }
                 else if (event is PresentNotFoundMessage) {
                     _rows.add(TransactionListHeaderViewModel(title: "All"));

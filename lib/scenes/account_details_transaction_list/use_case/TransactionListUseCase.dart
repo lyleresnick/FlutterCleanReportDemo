@@ -2,7 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_clean_report_demo/entity_gateway/EntityGateway.dart';
+import 'package:flutter_clean_report_demo/repo/factory/EntityGateway.dart';
 import 'package:flutter_clean_report_demo/scenes/common/Bloc.dart';
 import 'TransactionListUseCaseOutput.dart';
 import 'TransactionListViewReadyTwoSourceUseCaseTransformer.dart';
@@ -14,13 +14,13 @@ class TransactionListUseCase extends Bloc {
     final _controller = StreamController<TransactionListUseCaseOutput>();
     Stream<TransactionListUseCaseOutput> get stream => _controller.stream;
 
-    final EntityGateway _entityGateway;
-    TransactionListUseCase({@required EntityGateway entityGateway}) : _entityGateway = entityGateway;
+    final EntityGateway entityGateway;
+    TransactionListUseCase({@required this.entityGateway});
 
   void eventViewReady() {
 
-      final transformer = TransactionListViewReadyTwoSourceUseCaseTransformer(transactionManager: _entityGateway.transactionManager);
-//      final transformer = TransactionListViewReadyOneSourceUseCaseTransformer(transactionManager: _entityGateway.transactionManager);
+      final transformer = TransactionListViewReadyTwoSourceUseCaseTransformer(transactionManager: entityGateway.transactionManager);
+//      final transformer = TransactionListViewReadyOneSourceUseCaseTransformer(transactionManager: entityGateway.transactionManager);
       transformer.transform(output:  _controller.sink);
 
   }

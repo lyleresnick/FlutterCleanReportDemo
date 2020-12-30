@@ -2,9 +2,10 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_clean_report_demo/entities/TransactionEntity.dart';
-import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
-import 'package:flutter_clean_report_demo/managers/TransactionManager.dart';
+import 'package:flutter_clean_report_demo/repo/entities/TransactionEntity.dart';
+import 'package:flutter_clean_report_demo/repo/entities/TransactionGroup.dart';
+import 'package:flutter_clean_report_demo/repo/factory/Result.dart';
+import 'package:flutter_clean_report_demo/repo/factory/TransactionManager.dart';
 import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCaseOutput.dart';
 
 class TransactionListViewReadyTwoSourceUseCaseTransformer {
@@ -13,41 +14,39 @@ class TransactionListViewReadyTwoSourceUseCaseTransformer {
 
     TransactionListViewReadyTwoSourceUseCaseTransformer({@required this.transactionManager});
 
-    transform({StreamSink<TransactionListUseCaseOutput> output}) {
+    transform({StreamSink<TransactionListUseCaseOutput> output}) async {
 
         var grandTotal = 0.0;
         output.add(PresentInit());
 
-        grandTotal += transformGroup(transactions: transactionManager.fetchAuthorizedTransactions(), group: TransactionGroup.authorized, output: output);
-        grandTotal += transformGroup(transactions: transactionManager.fetchPostedTransactions(), group: TransactionGroup.posted, output: output);
+        grandTotal += transformGroup(result: await transactionManager.fetchAuthorizedTransactions(), group: TransactionGroup.authorized, output: output);
+        grandTotal += transformGroup(result: await transactionManager.fetchPostedTransactions(), group: TransactionGroup.posted, output: output);
         output.add(PresentGrandFooter(grandTotal));
 
         output.add(PresentReport());
     }
 
-    double transformGroup({List<TransactionEntity> transactions, TransactionGroup group, StreamSink<TransactionListUseCaseOutput> output}) {
-
+    double transformGroup({Result<List<TransactionEntity>, TransactionException> result, TransactionGroup group, StreamSink<TransactionListUseCaseOutput> output}) {
         var total = 0.0;
         output.add(PresentHeader(group));
 
-        if(transactions != null) {
-
-            if(transactions.length == 0) {
+        if (result is SuccessResult) {
+            if (result.data.length == 0) {
                 output.add(PresentNoTransactionsMessage(group));
             }
             else {
-                var transactionStream = transactions.iterator;
+                var transactionStream = result.data.iterator;
                 var transaction = next(transactionStream);
 
-                while(transaction != null) {
-
+                while (transaction != null) {
                     final currentDate = transaction.date;
                     output.add(PresentSubheader(currentDate));
 
-                    while(transaction != null && transaction.date == currentDate) {
-
+                    while (transaction != null &&
+                            transaction.date == currentDate) {
                         total += transaction.amount;
-                        output.add(PresentDetail(transaction.description, transaction.amount));
+                        output.add(PresentDetail(
+                                transaction.description, transaction.amount));
                         transaction = next(transactionStream);
                     }
                     output.add(PresentSubfooter());
@@ -55,8 +54,11 @@ class TransactionListViewReadyTwoSourceUseCaseTransformer {
                 output.add(PresentFooter(total));
             }
         }
-        else {
+        else if (result is SemanticErrorResult) {
             output.add(PresentGroupNotFoundMessage(group));
+        }
+        else if (result is FailureResult) {
+            output.add(PresentFailure(result.code, result.description));
         }
 
         return total;

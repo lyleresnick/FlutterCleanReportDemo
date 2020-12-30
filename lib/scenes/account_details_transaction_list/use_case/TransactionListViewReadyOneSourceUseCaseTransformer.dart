@@ -2,9 +2,10 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_clean_report_demo/entities/TransactionEntity.dart';
-import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
-import 'package:flutter_clean_report_demo/managers/TransactionManager.dart';
+import 'package:flutter_clean_report_demo/repo/entities/TransactionEntity.dart';
+import 'package:flutter_clean_report_demo/repo/entities/TransactionGroup.dart';
+import 'package:flutter_clean_report_demo/repo/factory/Result.dart';
+import 'package:flutter_clean_report_demo/repo/factory/TransactionManager.dart';
 import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCaseOutput.dart';
 
 class TransactionListViewReadyOneSourceUseCaseTransformer {
@@ -13,18 +14,18 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
 
     TransactionListViewReadyOneSourceUseCaseTransformer({@required this.transactionManager});
 
-    transform({StreamSink<TransactionListUseCaseOutput> output}) {
+    transform({StreamSink<TransactionListUseCaseOutput> output}) async {
 
         var grandTotal = 0.0;
         output.add(PresentInit());
 
-        final allTransactions = transactionManager.fetchAllTransactions();
-        if(allTransactions != null) {
+        final result = await transactionManager.fetchAllTransactions();
+        if (result is SuccessResult) {
 
             var groupStream = [TransactionGroup.authorized, TransactionGroup.posted].iterator;
             var currentGroup = next(groupStream);
 
-            var transactionStream = allTransactions.iterator;
+            var transactionStream = result.data.iterator;
             var transaction = next(transactionStream);
 
             var minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
@@ -65,8 +66,10 @@ class TransactionListViewReadyOneSourceUseCaseTransformer {
                 }
             }
         }
-        else {
+        else if (result is SemanticErrorResult)
             output.add(PresentNotFoundMessage());
+        else if (result is FailureResult) {
+            output.add(PresentFailure(result.code, result.description));
         }
         output.add(PresentGrandFooter(grandTotal));
         output.add(PresentReport());

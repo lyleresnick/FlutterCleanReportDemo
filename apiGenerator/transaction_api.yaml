@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: v1
+servers:
+  - url: 'https://report-demo-backend.herokuapp.com/api'
+
+paths:
+  /sortedTransactions/authorized:
+    get:
+      tags:
+        - Transaction
+      summary: Returns authorized Transactions only.
+      operationId: getAuthorized
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+        '404':
+          description: Transactions are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sortedTransactions/posted:
+    get:
+      tags:
+        - Transaction
+      summary: Returns posted Transactions only.
+      operationId: getPosted
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+        '404':
+          description: Transactions are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /sortedTransactions/all:
+    get:
+      tags:
+        - Transaction
+      summary: Returns all Transactions.
+      operationId: getAll
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+        '404':
+          description: Transactions are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TransactionResponse:
+      type: object
+      properties:
+        group:
+          type: string
+          nullable: false
+          readOnly: true
+        date:
+          type: string
+          format: date-time
+          example: 2017-12-10T23:59:59Z
+          readOnly: true
+        description:
+          type: string
+          nullable: false
+          readOnly: true
+        amount:
+          type: string
+          nullable: false
+          readOnly: true
+        debit:
+          type: string
+          nullable: false
+          readOnly: true
+      additionalProperties: false
+
+    ErrorResponse:
+      type: object
+      properties:
+        reason:
+          type: string
+          nullable: false
+        error:
+          type: boolean
+          nullable: false
+      additionalProperties: {}
+
+      

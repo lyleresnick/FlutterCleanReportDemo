@@ -1,5 +1,6 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
-import 'package:flutter_clean_report_demo/entities/TransactionGroup.dart';
+
+import 'package:flutter_clean_report_demo/repo/entities/TransactionGroup.dart';
 
 abstract class TransactionListUseCaseOutput {}
 
@@ -14,4 +15,5 @@ class PresentGrandFooter extends TransactionListUseCaseOutput { final double gra
 class PresentGroupNotFoundMessage extends TransactionListUseCaseOutput { final TransactionGroup group; PresentGroupNotFoundMessage(this.group);}
 class PresentNoTransactionsMessage extends TransactionListUseCaseOutput { final TransactionGroup group; PresentNoTransactionsMessage(this.group);}
 class PresentNotFoundMessage extends TransactionListUseCaseOutput {}
+class PresentFailure extends TransactionListUseCaseOutput { final int code; final String description; PresentFailure(this.code, this.description);}
 class PresentReport extends TransactionListUseCaseOutput {}
