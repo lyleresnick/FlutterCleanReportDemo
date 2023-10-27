@@ -14,8 +14,6 @@ extension TransactionGroupRawValue on TransactionGroup {
                 return "Authorized";
             case TransactionGroup.posted:
                 return "Posted";
-            default:
-                throw "Bad Group";
         }
     }
 }

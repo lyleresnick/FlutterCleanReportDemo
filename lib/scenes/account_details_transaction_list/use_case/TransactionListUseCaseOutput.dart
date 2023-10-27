@@ -1,19 +1,10 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
 
-import 'package:flutter_clean_report_demo/repo/entities/TransactionGroup.dart';
+import 'TransactionListPresentationModel.dart';
 
 abstract class TransactionListUseCaseOutput {}
 
-// ViewReady
-class PresentInit extends TransactionListUseCaseOutput {}
-class PresentHeader extends TransactionListUseCaseOutput { final TransactionGroup group; PresentHeader(this.group);}
-class PresentSubheader extends TransactionListUseCaseOutput { final DateTime date; PresentSubheader(this.date);}
-class PresentDetail extends TransactionListUseCaseOutput { final String description; final double amount; PresentDetail(this.description, this.amount);}
-class PresentSubfooter extends TransactionListUseCaseOutput {}
-class PresentFooter extends TransactionListUseCaseOutput { final double total; PresentFooter(this.total);}
-class PresentGrandFooter extends TransactionListUseCaseOutput { final double grandTotal; PresentGrandFooter(this.grandTotal);}
-class PresentGroupNotFoundMessage extends TransactionListUseCaseOutput { final TransactionGroup group; PresentGroupNotFoundMessage(this.group);}
-class PresentNoTransactionsMessage extends TransactionListUseCaseOutput { final TransactionGroup group; PresentNoTransactionsMessage(this.group);}
-class PresentNotFoundMessage extends TransactionListUseCaseOutput {}
-class PresentFailure extends TransactionListUseCaseOutput { final int code; final String description; PresentFailure(this.code, this.description);}
-class PresentReport extends TransactionListUseCaseOutput {}
+class PresentReport extends TransactionListUseCaseOutput {
+  final List<TransactionListRowPresentationModel> rows;
+  PresentReport(this.rows);
+}

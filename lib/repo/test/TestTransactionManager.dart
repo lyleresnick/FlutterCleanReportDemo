@@ -9,17 +9,15 @@ import 'package:flutter_clean_report_demo/repo/factory/TransactionManager.dart';
 
 class TestTransactionManager implements TransactionManager {
 
-    Future<Result<List<TransactionEntity>, TransactionException>> fetchAllTransactions() async {
+    Future<Result<List<TransactionEntity>>> fetchAllTransactions() async {
         return SuccessResult(data: allData);
-        // return SemanticErrorResult(reason: TransactionException.notFound);
     }
 
-    Future<Result<List<TransactionEntity>, TransactionException>> fetchAuthorizedTransactions() async  {
+    Future<Result<List<TransactionEntity>>> fetchAuthorizedTransactions() async  {
         return SuccessResult(data: authorizedData);
-        // return SemanticErrorResult(reason: TransactionException.notFound);
     }
 
-    Future<Result<List<TransactionEntity>, TransactionException>> fetchPostedTransactions() async {
+    Future<Result<List<TransactionEntity>>> fetchPostedTransactions() async {
         return SuccessResult(data: postedData);
     }
 

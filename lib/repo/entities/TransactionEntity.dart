@@ -1,6 +1,5 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
 
-import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:transaction_api/api.dart';
 import 'TransactionGroup.dart';
@@ -14,9 +13,9 @@ class TransactionEntity {
 
     static final _inboundDateFormatter = DateFormat("yyyy'-'MM'-'dd");
 
-    TransactionEntity({@required this.group, @required this.date, @required this.description, @required this.amount});
+    TransactionEntity({required this.group, required this.date, required this.description, required this.amount});
 
-    factory TransactionEntity.fromStrings({@required String group, @required String date, @required String description, @required String amount, @required String debit}) {
+    factory TransactionEntity.fromStrings({required String group, required String date, required String description, required String amount, required String debit}) {
         TransactionGroup saveGroup;
         DateTime saveDate;
         double saveAmount;
@@ -49,7 +48,7 @@ class TransactionEntity {
         }
 
         try {
-            saveAmount = double.tryParse(sign + amount);
+            saveAmount = double.tryParse(sign + amount)!;
         }
         catch (e) {
             throw("Format of Transaction Amount is incorrect");
@@ -75,7 +74,7 @@ class TransactionEntity {
             throw("Format of Group is incorrect");
         }
         if (response.date == null)
-            throw("Format of Transaction Date is incorrect");
+            throw("Format of Transaction Date is null");
 
         String sign;
         if (response.debit == "D") {
@@ -88,16 +87,21 @@ class TransactionEntity {
             throw("Format of Transaction Sign is incorrect");
         }
 
+        if (response.amount == null)
+            throw("Format of Transaction Amount is null");
         try {
-            amount = double.tryParse(sign + response.amount);
+            amount = double.tryParse(sign + response.amount!)!;
         }
         catch (e) {
             throw("Format of Transaction Amount is incorrect");
         }
+        if (response.description == null)
+            throw("Format of Transaction Description is null");
+
         return TransactionEntity(
                 group: group,
-                date: response.date,
-                description: response.description,
+                date: response.date!,
+                description: response.description!,
                 amount: amount);
     }
 }

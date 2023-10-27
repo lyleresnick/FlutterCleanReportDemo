@@ -1,165 +1,186 @@
-part of transaction_api.api;
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.12
 
-// TransactionResponse
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: lines_longer_than_80_chars
+
+part of openapi.api;
+
 class TransactionResponse {
-     
-     String group;
-     
-     DateTime date;
-     
-     String description;
-     
-     String amount;
-     
-     String debit;
-  TransactionResponse();
+  /// Returns a new [TransactionResponse] instance.
+  TransactionResponse({
+    this.group,
+    this.date,
+    this.description,
+    this.amount,
+    this.debit,
+  });
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? group;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? date;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? description;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? amount;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? debit;
 
   @override
-  String toString() {
-    return 'TransactionResponse[group=$group, date=$date, description=$description, amount=$amount, debit=$debit, ]';
-  }
+  bool operator ==(Object other) => identical(this, other) || other is TransactionResponse &&
+    other.group == group &&
+    other.date == date &&
+    other.description == description &&
+    other.amount == amount &&
+    other.debit == debit;
 
-  fromJson(Map<String, dynamic> json) {
-    if (json == null) return;
-  
-    {
-      final _jsonData = json[r'group'];
-      group = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'date'];
-      date = (_jsonData == null) ? null :
-        DateTime.parse(_jsonData);
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'description'];
-      description = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'amount'];
-      amount = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
-    {
-      final _jsonData = json[r'debit'];
-      debit = (_jsonData == null) ? null :
-        _jsonData;
-    } // _jsonFieldName
+  @override
+  int get hashCode =>
+    // ignore: unnecessary_parenthesis
+    (group == null ? 0 : group!.hashCode) +
+    (date == null ? 0 : date!.hashCode) +
+    (description == null ? 0 : description!.hashCode) +
+    (amount == null ? 0 : amount!.hashCode) +
+    (debit == null ? 0 : debit!.hashCode);
 
-  }
-
-  TransactionResponse.fromJson(Map<String, dynamic> json) {
-    fromJson(json); // allows child classes to call
-  }
+  @override
+  String toString() => 'TransactionResponse[group=$group, date=$date, description=$description, amount=$amount, debit=$debit]';
 
   Map<String, dynamic> toJson() {
-
     final json = <String, dynamic>{};
-    if (group != null) {
-        json[r'group'] = LocalApiClient.serialize(group);
+    if (this.group != null) {
+      json[r'group'] = this.group;
+    } else {
+      json[r'group'] = null;
     }
-    if (date != null) {
-      json[r'date'] = date.toUtc().toIso8601String();
+    if (this.date != null) {
+      json[r'date'] = this.date!.toUtc().toIso8601String();
+    } else {
+      json[r'date'] = null;
     }
-    if (description != null) {
-        json[r'description'] = LocalApiClient.serialize(description);
+    if (this.description != null) {
+      json[r'description'] = this.description;
+    } else {
+      json[r'description'] = null;
     }
-    if (amount != null) {
-        json[r'amount'] = LocalApiClient.serialize(amount);
+    if (this.amount != null) {
+      json[r'amount'] = this.amount;
+    } else {
+      json[r'amount'] = null;
     }
-    if (debit != null) {
-        json[r'debit'] = LocalApiClient.serialize(debit);
+    if (this.debit != null) {
+      json[r'debit'] = this.debit;
+    } else {
+      json[r'debit'] = null;
     }
     return json;
   }
-  static List<TransactionResponse> listFromJson(List<dynamic> json) {
-    return json == null ? <TransactionResponse>[] : json.map((value) => TransactionResponse.fromJson(value)).toList();
+
+  /// Returns a new [TransactionResponse] instance and imports its values from
+  /// [value] if it's a [Map], null otherwise.
+  // ignore: prefer_constructors_over_static_methods
+  static TransactionResponse? fromJson(dynamic value) {
+    if (value is Map) {
+      final json = value.cast<String, dynamic>();
+
+      // Ensure that the map contains the required keys.
+      // Note 1: the values aren't checked for validity beyond being non-null.
+      // Note 2: this code is stripped in release mode!
+      assert(() {
+        requiredKeys.forEach((key) {
+          assert(json.containsKey(key), 'Required key "TransactionResponse[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "TransactionResponse[$key]" has a null value in JSON.');
+        });
+        return true;
+      }());
+
+      return TransactionResponse(
+        group: mapValueOfType<String>(json, r'group'),
+        date: mapDateTime(json, r'date', r''),
+        description: mapValueOfType<String>(json, r'description'),
+        amount: mapValueOfType<String>(json, r'amount'),
+        debit: mapValueOfType<String>(json, r'debit'),
+      );
+    }
+    return null;
   }
 
-  static Map<String, TransactionResponse> mapFromJson(Map<String, dynamic> json) {
+  static List<TransactionResponse> listFromJson(dynamic json, {bool growable = false,}) {
+    final result = <TransactionResponse>[];
+    if (json is List && json.isNotEmpty) {
+      for (final row in json) {
+        final value = TransactionResponse.fromJson(row);
+        if (value != null) {
+          result.add(value);
+        }
+      }
+    }
+    return result.toList(growable: growable);
+  }
+
+  static Map<String, TransactionResponse> mapFromJson(dynamic json) {
     final map = <String, TransactionResponse>{};
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) => map[key] = TransactionResponse.fromJson(value));
+    if (json is Map && json.isNotEmpty) {
+      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      for (final entry in json.entries) {
+        final value = TransactionResponse.fromJson(entry.value);
+        if (value != null) {
+          map[entry.key] = value;
+        }
+      }
     }
     return map;
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
+  // maps a json object with a list of TransactionResponse-objects as value to a dart map
+  static Map<String, List<TransactionResponse>> mapListFromJson(dynamic json, {bool growable = false,}) {
+    final map = <String, List<TransactionResponse>>{};
+    if (json is Map && json.isNotEmpty) {
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
+      for (final entry in json.entries) {
+        map[entry.key] = TransactionResponse.listFromJson(entry.value, growable: growable,);
+      }
     }
-
-    if (other is TransactionResponse && runtimeType == other.runtimeType) {
-    return 
-
-     group == other.group &&
-  
-          date == other.date &&
-    
-
-     description == other.description &&
-  
-
-     amount == other.amount &&
-  
-
-     debit == other.debit
-    ;
-    }
-
-    return false;
+    return map;
   }
 
-  @override
-  int get hashCode {
-    var hashCode = runtimeType.hashCode;
-
-    
-
-    if (group != null) {
-      hashCode = hashCode ^ group.hashCode;
-    }
-
-            if (date != null) {
-              hashCode = hashCode ^ date.hashCode;
-            }
-    
-
-    if (description != null) {
-      hashCode = hashCode ^ description.hashCode;
-    }
-
-
-    if (amount != null) {
-      hashCode = hashCode ^ amount.hashCode;
-    }
-
-
-    if (debit != null) {
-      hashCode = hashCode ^ debit.hashCode;
-    }
-
-
-    return hashCode;
-  }
-
-  TransactionResponse copyWith({
-       String group,
-       DateTime date,
-       String description,
-       String amount,
-       String debit,
-    }) {
-    TransactionResponse copy = TransactionResponse();
-        copy.group = group ?? this.group;
-        copy.date = date ?? this.date;
-        copy.description = description ?? this.description;
-        copy.amount = amount ?? this.amount;
-        copy.debit = debit ?? this.debit;
-    return copy;
-  }
+  /// The list of required keys that must be present in a JSON.
+  static const requiredKeys = <String>{
+  };
 }
 

@@ -15,9 +15,9 @@ enum Implementation {
 abstract class EntityGateway {
     TransactionManager get transactionManager;
 
-    static final gatewayImplementation = Implementation.networked;
+    static final gatewayImplementation = Implementation.test;
 
-    static EntityGateway _entityGateway;
+    static EntityGateway? _entityGateway;
 
     static get entityGateway {
         if(_entityGateway != null) return _entityGateway;

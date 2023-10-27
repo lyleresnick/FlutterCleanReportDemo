@@ -8,7 +8,7 @@ enum TransactionException {
 }
 
 abstract class TransactionManager {
-    Future<Result<List<TransactionEntity>, TransactionException>> fetchAllTransactions();
-    Future<Result<List<TransactionEntity>, TransactionException>> fetchAuthorizedTransactions();
-    Future<Result<List<TransactionEntity>, TransactionException>> fetchPostedTransactions();
+    Future<Result<List<TransactionEntity>>> fetchAllTransactions();
+    Future<Result<List<TransactionEntity>>> fetchAuthorizedTransactions();
+    Future<Result<List<TransactionEntity>>> fetchPostedTransactions();
 }

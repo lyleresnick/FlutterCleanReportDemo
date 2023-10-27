@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'TransactionListCell.dart';
-import '../../presenter/TransactionListRowViewModel.dart';
+import '../../presenter/TransactionListViewModel.dart';
 
 class TransactionListSubfooterCell extends TransactionListCell {
+  final TransactionListSubfooterViewModel row;
 
-    final TransactionListSubfooterViewModel row;
+  TransactionListSubfooterCell({required TransactionListRowViewModel row})
+      : assert(row is TransactionListSubfooterViewModel, "Expected: subfooter"),
+        row = row as TransactionListSubfooterViewModel;
 
-    TransactionListSubfooterCell({@required TransactionListRowViewModel row})
-            : assert(row is TransactionListSubfooterViewModel, "Expected: subfooter"),
-                row = row;
-
-    @override
-    Widget build(BuildContext context) {
-        return Container(
-            height: 12,
-            color: backgroundColour(row.odd),
-        );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 12,
+      color: backgroundColour(row.odd),
+    );
+  }
 }

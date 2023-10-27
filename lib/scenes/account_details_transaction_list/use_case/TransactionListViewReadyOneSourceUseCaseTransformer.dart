@@ -2,101 +2,89 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_clean_report_demo/repo/entities/TransactionEntity.dart';
 import 'package:flutter_clean_report_demo/repo/entities/TransactionGroup.dart';
 import 'package:flutter_clean_report_demo/repo/factory/Result.dart';
 import 'package:flutter_clean_report_demo/repo/factory/TransactionManager.dart';
-import 'package:flutter_clean_report_demo/scenes/account_details_transaction_list/use_case/TransactionListUseCaseOutput.dart';
+
+import 'TransactionListPresentationModel.dart';
 
 class TransactionListViewReadyOneSourceUseCaseTransformer {
+  final TransactionManager transactionManager;
 
-    final TransactionManager transactionManager;
+  TransactionListViewReadyOneSourceUseCaseTransformer({required this.transactionManager});
 
-    TransactionListViewReadyOneSourceUseCaseTransformer({@required this.transactionManager});
+  Future<List<TransactionListRowPresentationModel>> transform() async {
+    var grandTotal = 0.0;
+    final output = <TransactionListRowPresentationModel>[];
 
-    transform({StreamSink<TransactionListUseCaseOutput> output}) async {
+    final result = await transactionManager.fetchAllTransactions();
+    switch (result) {
+      case SuccessResult(:final data):
+        var groupStream = [TransactionGroup.authorized, TransactionGroup.posted].iterator;
+        var currentGroup = next(groupStream);
 
-        var grandTotal = 0.0;
-        output.add(PresentInit());
+        var transactionStream = data!.iterator;
+        var transaction = next(transactionStream);
 
-        final result = await transactionManager.fetchAllTransactions();
-        if (result is SuccessResult) {
+        var minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
+        while (minGroup != null) {
+          output.add(TransactionListHeaderRowPresentationModel(minGroup));
 
-            var groupStream = [TransactionGroup.authorized, TransactionGroup.posted].iterator;
-            var currentGroup = next(groupStream);
+          if ((transaction == null) || (minGroup != transaction.group)) {
+            output.add(TransactionListNoTransactionsInGroupRowPresentationModel(minGroup));
+            currentGroup = next(groupStream);
+            minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
+          } else {
+            var total = 0.0;
+            var odd = false;
+            while ((transaction != null) && (transaction.group == minGroup)) {
+              final currentDate = transaction.date;
+              odd = !odd;
+              output.add(TransactionListSubheaderRowPresentationModel(currentDate, odd));
 
-            var transactionStream = result.data.iterator;
-            var transaction = next(transactionStream);
+              while ((transaction != null) &&
+                  (transaction.group == minGroup) &&
+                  (transaction.date == currentDate)) {
+                final amount = transaction.amount;
+                total += amount;
+                grandTotal += amount;
+                output.add(TransactionListDetailRowPresentationModel(
+                    transaction.description, amount, odd));
 
-            var minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
-            while(minGroup != null) {
-
-                output.add(PresentHeader(minGroup));
-
-                if((transaction == null) || (minGroup != transaction.group)) {
-
-                    output.add(PresentNoTransactionsMessage(minGroup));
-                    currentGroup = next(groupStream);
-                    minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
-                }
-                else {
-                    var total = 0.0;
-
-                    while((transaction != null) && (transaction.group == minGroup)) {
-
-                        final currentDate = transaction.date;
-                        output.add(PresentSubheader(currentDate));
-
-                        while((transaction != null)
-                            && (transaction.group == minGroup)
-                            && (transaction.date == currentDate)) {
-
-                            final amount = transaction.amount;
-                            total += amount;
-                            grandTotal += amount;
-                            output.add(PresentDetail(transaction.description, amount));
-
-                            transaction = next(transactionStream);
-                        }
-                        output.add(PresentSubfooter());
-                    }
-                    output.add(PresentFooter(total));
-                    currentGroup = next(groupStream);
-                    minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
-                }
+                transaction = next(transactionStream);
+              }
+              output.add(TransactionListSubfooterRowPresentationModel(odd));
             }
+            odd = !odd;
+            output.add(TransactionListFooterRowPresentationModel(total, odd));
+            currentGroup = next(groupStream);
+            minGroup = determineMinGroup(group: currentGroup, transaction: transaction);
+          }
         }
-        else if (result is SemanticErrorResult)
-            output.add(PresentNotFoundMessage());
-        else if (result is FailureResult) {
-            output.add(PresentFailure(result.code, result.description));
-        }
-        output.add(PresentGrandFooter(grandTotal));
-        output.add(PresentReport());
+      case FailureResult(:final code, :final description):
+        output.add(TransactionListFailureRowPresentationModel(code!, description!));
     }
+    output.add(TransactionListGrandFooterRowPresentationModel(grandTotal));
+    return output;
+  }
 
-    T next<T>(Iterator<T> transactionStream) {
-        if (transactionStream.moveNext())
-            return transactionStream.current;
-        else
-            return null;
+  T? next<T>(Iterator<T> transactionStream) {
+    if (transactionStream.moveNext())
+      return transactionStream.current;
+    else
+      return null;
+  }
+
+  TransactionGroup? determineMinGroup({TransactionGroup? group, TransactionEntity? transaction}) {
+    if ((group == null) && (transaction == null)) {
+      return null;
+    } else if (group == null) {
+      return transaction!.group;
+    } else if (transaction == null) {
+      return group;
+    } else {
+      return group.rawValue.compareTo(transaction.group.rawValue) < 0 ? group : transaction.group;
     }
-
-    TransactionGroup determineMinGroup({TransactionGroup group, TransactionEntity transaction}) {
-
-        if((group == null) && (transaction == null)) {
-            return null;
-        }
-        else if(group == null) {
-            return transaction.group;
-        }
-        else if(transaction == null) {
-            return group;
-        }
-        else {
-             return group.rawValue.compareTo(transaction.group.rawValue) < 0 ? group : transaction.group;
-        }
-    }
+  }
 }
-

@@ -1,205 +1,159 @@
-part of transaction_api.api;
+//
+// AUTO-GENERATED FILE, DO NOT MODIFY!
+//
+// @dart=2.12
+
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: lines_longer_than_80_chars
+
+part of openapi.api;
 
 
 class TransactionApi {
-  final TransactionApiDelegate apiDelegate;
-  TransactionApi(ApiClient apiClient) : assert(apiClient != null), apiDelegate = TransactionApiDelegate(apiClient);
+  TransactionApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
-
-  /// Returns all Transactions.
-  ///
-  /// 
-    Future<List<TransactionResponse>> 
-  getAll({Options options}) async {
-
-    final response = await apiDelegate.getAll( options: options, );
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.getAll_decode(response);
-    }
-  }
-
-  /// Returns all Transactions.
-  ///
-  /// 
-  /// Returns authorized Transactions only.
-  ///
-  /// 
-    Future<List<TransactionResponse>> 
-  getAuthorized({Options options}) async {
-
-    final response = await apiDelegate.getAuthorized( options: options, );
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.getAuthorized_decode(response);
-    }
-  }
-
-  /// Returns authorized Transactions only.
-  ///
-  /// 
-  /// Returns posted Transactions only.
-  ///
-  /// 
-    Future<List<TransactionResponse>> 
-  getPosted({Options options}) async {
-
-    final response = await apiDelegate.getPosted( options: options, );
-
-    if(response.statusCode >= 400) {
-      throw ApiException(response.statusCode, await decodeBodyBytes(response));
-    } else {
-      return await apiDelegate.getPosted_decode(response);
-    }
-  }
-
-  /// Returns posted Transactions only.
-  ///
-  /// 
-}
-
-
-  class TransactionApiDelegate {
   final ApiClient apiClient;
 
-TransactionApiDelegate(this.apiClient) : assert(apiClient != null);
+  /// Returns all Transactions.
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> getAllWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/sortedTransactions/all';
 
-    Future<ApiResponse>
-  getAll({Options options}) async {
-    Object postBody;
+    // ignore: prefer_final_locals
+    Object? postBody;
 
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/sortedTransactions/all';
-
-    // query params
     final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
 
 
-    final authNames = <String>[];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<List<TransactionResponse>> 
-  getAll_decode(ApiResponse response) async {
-    if(response.body != null) {
-          return (LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'List<TransactionResponse>') as List).map((item) => item as TransactionResponse).toList();
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  getAuthorized({Options options}) async {
-    Object postBody;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/sortedTransactions/authorized';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-
-    final authNames = <String>[];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<List<TransactionResponse>> 
-  getAuthorized_decode(ApiResponse response) async {
-    if(response.body != null) {
-          return (LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'List<TransactionResponse>') as List).map((item) => item as TransactionResponse).toList();
-    }
-
-    return null;
-    }
-    Future<ApiResponse>
-  getPosted({Options options}) async {
-    Object postBody;
-
-    // verify required params are set
-
-    // create path and map variables
-    final __path = '/sortedTransactions/posted';
-
-    // query params
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{}..addAll(options?.headers?.cast<String, String>() ?? {});
-    if(headerParams['Accept'] == null) {
-      // we only want to accept this format as we can parse it
-      headerParams['Accept'] = 'application/json';
-    }
-
-
-    final authNames = <String>[];
-    final opt = options ?? Options();
-
-      final contentTypes = [];
-
-      if (contentTypes.isNotEmpty && headerParams['Content-Type'] == null) {
-      headerParams['Content-Type'] = contentTypes[0];
-      }
-      if (postBody != null) {
-      postBody = LocalApiClient.serialize(postBody);
-      }
-
-    opt.headers = headerParams;
-    opt.method = 'GET';
-
-    return await apiClient.invokeAPI(__path, queryParams, postBody, authNames, opt);
-    }
-
-    Future<List<TransactionResponse>> 
-  getPosted_decode(ApiResponse response) async {
-    if(response.body != null) {
-          return (LocalApiClient.deserializeFromString(await decodeBodyBytes(response), 'List<TransactionResponse>') as List).map((item) => item as TransactionResponse).toList();
-    }
-
-    return null;
-    }
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
   }
 
+  /// Returns all Transactions.
+  Future<List<TransactionResponse>?> getAll() async {
+    final response = await getAllWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<TransactionResponse>') as List)
+        .cast<TransactionResponse>()
+        .toList(growable: false);
 
+    }
+    return null;
+  }
+
+  /// Returns authorized Transactions only.
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> getAuthorizedWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/sortedTransactions/authorized';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Returns authorized Transactions only.
+  Future<List<TransactionResponse>?> getAuthorized() async {
+    final response = await getAuthorizedWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<TransactionResponse>') as List)
+        .cast<TransactionResponse>()
+        .toList(growable: false);
+
+    }
+    return null;
+  }
+
+  /// Returns posted Transactions only.
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response> getPostedWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/sortedTransactions/posted';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Returns posted Transactions only.
+  Future<List<TransactionResponse>?> getPosted() async {
+    final response = await getPostedWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<TransactionResponse>') as List)
+        .cast<TransactionResponse>()
+        .toList(growable: false);
+
+    }
+    return null;
+  }
+}

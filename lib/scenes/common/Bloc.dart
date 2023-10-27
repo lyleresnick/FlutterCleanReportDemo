@@ -1,5 +1,6 @@
-abstract class Bloc<Output> {
+abstract interface class Bloc<Output> {
 
+  void emit(Output value);
   Stream<Output> get stream;
   void dispose();
 }
