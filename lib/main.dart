@@ -1,7 +1,7 @@
 //  Copyright © 2019 Lyle Resnick. All rights reserved.
 
 import 'package:flutter/material.dart';
-import 'scenes/account_details_transaction_list/view/TransactionListScene.dart';
+import 'package:flutter_clean_report_demo/Scenes/TransactionList/TransactionList.dart' as TransactionList;
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TransactionListScene.assembled(),
+      home: TransactionList.Assembly().scene,
     );
   }
 }

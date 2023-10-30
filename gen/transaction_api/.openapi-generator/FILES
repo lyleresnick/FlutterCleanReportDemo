@@ -19,6 +19,3 @@ lib/auth/oauth.dart
 lib/model/error_response.dart
 lib/model/transaction_response.dart
 pubspec.yaml
-test/error_response_test.dart
-test/transaction_api_test.dart
-test/transaction_response_test.dart

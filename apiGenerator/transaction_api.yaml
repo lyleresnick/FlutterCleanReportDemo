@@ -3,7 +3,7 @@ info:
   title: Transaction API
   version: v1
 servers:
-  - url: 'https://report-demo-backend.herokuapp.com/api'
+  - url: 'https://report-demo-backend-lyle.fly.dev/api'
 
 paths:
   /sortedTransactions/authorized:

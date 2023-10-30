@@ -5,7 +5,7 @@
 import 'package:transaction_api/api.dart';
 ```
 
-All URIs are relative to *https://report-demo-backend.herokuapp.com/api*
+All URIs are relative to *https://report-demo-backend-lyle.fly.dev/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

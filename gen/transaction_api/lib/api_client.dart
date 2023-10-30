@@ -11,7 +11,7 @@
 part of openapi.api;
 
 class ApiClient {
-  ApiClient({this.basePath = 'https://report-demo-backend.herokuapp.com/api', this.authentication,});
+  ApiClient({this.basePath = 'https://report-demo-backend-lyle.fly.dev/api', this.authentication,});
 
   final String basePath;
   final Authentication? authentication;
